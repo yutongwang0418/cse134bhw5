@@ -29,11 +29,12 @@
         const putBtn = document.getElementById('put')
         const deleteBtn = document.getElementById('delete')
 
-        const url = 'https://httpbin.org/post';
+        const postUrl = 'https://httpbin.org/post';
+        const getUrl = 'https://httpbin.org/get';
 
         postBtn.addEventListener('click', ()=> {
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', url, true);
+            xhr.open('POST', postUrl, true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
                     console.log(xhr.status);
@@ -50,7 +51,7 @@
 
         getBtn.addEventListener('click', ()=> {
             const xhr = new XMLHttpRequest();
-            xhr.open('Get', url, true);
+            xhr.open('Get', getUrl, true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
                     console.log(xhr.status);
