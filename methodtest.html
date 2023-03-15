@@ -32,6 +32,8 @@
         const postUrl = 'https://httpbin.org/post';
         const getUrl = 'https://httpbin.org/get';
 
+        let getData
+
         postBtn.addEventListener('click', ()=> {
             const xhr = new XMLHttpRequest();
             xhr.open('POST', postUrl, true);
@@ -53,9 +55,13 @@
             const xhr = new XMLHttpRequest();
             xhr.open('Get', getUrl, true);
             xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    console.log(xhr.status);
-                    console.log(xhr.responseText);
+                if (this.readyState === XMLHttpRequest.DONE) {
+                    if (this.status === 200) {
+                        const resp = JSON.parse(this.responseText);
+                        getData = resp.data;
+                    } else {
+                        console.log('Error:', this.statusText);
+                    }
                 }
             };            
             xhr.send();
