@@ -7,13 +7,45 @@
     <body>
         <header>
             <h1>hw5Part1</h1>
+            <!-- post: insert data -->
+            <button id="post">postBtn</button>
+            <!-- get: read data -->
+            <button id="get">getBtn</button>
+            <!-- put: update data, or insert if a new id -->
+            <button id="put">putBtn</button>
+            <!-- delete: delete data -->
+            <button id="delete">deleteBtn</button>
         </header>
 
         <main>
-            <button class="postBtn">postBtn</button>
-            <button class="getBtn">getBtn</button>
-            <button class="putBtn">putBtn</button>
-            <button class="deleteBtn">deleteBtn</button>
+            <p>The response is: </p>
+            <output id="response"></output>
         </main>
     </body>
+
+    <script type="module">
+        const postBtn = document.getElementById('post')
+        const getBtn = document.getElementById('get')
+        const putBtn = document.getElementById('put')
+        const deleteBtn = document.getElementById('delete')
+
+        const url = 'https://httpbin.org/post';
+
+        postBtn.addEventListener('click', ()=> {
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', url, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                }
+            };
+
+            let data = `{"Id": 00011}`;     
+
+            
+            xhr.send(data);
+
+        });
+    </script>
 </html>
