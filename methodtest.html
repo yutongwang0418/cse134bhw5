@@ -19,7 +19,7 @@
 
         <main>
             <p>The response is: </p>
-            <output id="response"></output>
+            <textarea id="response" rows="50" cols="100"></textarea>
         </main>
     </body>
 
@@ -31,23 +31,32 @@
 
         const postUrl = 'https://httpbin.org/post';
         const getUrl = 'https://httpbin.org/get';
+        const putUrl = 'https://httpbin.org/put';
+        const deleteUrl = 'https://httpbin.org/delete';
 
-        let getData
+        var data = {};
+        data.id = "";
+        data.article_name = "";
+        data.article_body = "";
+        data.date = "";
 
         postBtn.addEventListener('click', ()=> {
+            data.id = "010101";
+            data.article_name = "aaaaa";
+            data.article_body = "bbbbb";
+            data.date = new Date().toLocaleDateString("en-US");
+
+            var json = JSON.stringify(data);
+
             const xhr = new XMLHttpRequest();
             xhr.open('POST', postUrl, true);
+            xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
             xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    console.log(xhr.status);
-                    console.log(xhr.responseText);
-                }
+                console.log(xhr.responseText);
+                document.getElementById('response').innerHTML = this.responseText;
             };
-
-            let data = `{"Id": 00011}`;     
-
             
-            xhr.send(data);
+            xhr.send(json);
 
         });
 
@@ -55,15 +64,39 @@
             const xhr = new XMLHttpRequest();
             xhr.open('Get', getUrl, true);
             xhr.onreadystatechange = function() {
-                if (this.readyState === XMLHttpRequest.DONE) {
-                    if (this.status === 200) {
-                        const resp = JSON.parse(this.responseText);
-                        getData = resp.data;
-                    } else {
-                        console.log('Error:', this.statusText);
-                    }
-                }
-            };            
+                console.log(xhr.responseText);
+                document.getElementById('response').innerHTML = this.responseText;
+            };  
+            xhr.send();
+
+        });
+
+        putBtn.addEventListener('click', ()=> {
+            data.id = "222222222";
+            data.article_name = "ccccc";
+            data.article_body = "dddddddd";
+            data.date = new Date().toLocaleDateString("en-US");
+            
+            var json = JSON.stringify(data);
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('Put', putUrl, true);
+            xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
+            xhr.onreadystatechange = function() {
+                console.log(xhr.responseText);
+                document.getElementById('response').innerHTML = this.responseText;
+            };  
+            xhr.send(json);
+
+        });
+
+        deleteBtn.addEventListener('click', ()=> {
+            const xhr = new XMLHttpRequest();
+            xhr.open('Delete', deleteUrl, true);
+            xhr.onreadystatechange = function() {
+                console.log(xhr.responseText);
+                document.getElementById('response').innerHTML = this.responseText;
+            };  
             xhr.send();
 
         });
